@@ -1,0 +1,26 @@
+api:
+  build: ../node-api-gateway-template
+  links:
+        - redis-cache:redis
+        - db:db
+  ports:
+   - "9090:9090"
+
+nginx:
+  build: ./nginx
+  links:
+      - api:api.test
+  ports:
+      - "80:80"
+#  volumes:
+#   - ./nginx:/etc/nginx/
+
+redis-cache:
+  image: redis
+  ports:
+    - "6379"
+
+db:
+  image: mongo
+  ports:
+   - "27017:27017"
